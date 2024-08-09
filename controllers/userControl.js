@@ -17,9 +17,9 @@ module.exports = {
             return res.status(500).json(err)
         }
     },
-    async getOneUser(req, res) {
+    async getOneUser({ params }, res) {
         try {
-            const user = await User.findById(req.params.userid)
+            const user = await User.findById({ _id: params.id })
             .populate({
                 path: 'thoughts',
                 select: '-__v'

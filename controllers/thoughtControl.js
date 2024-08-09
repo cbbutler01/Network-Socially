@@ -17,9 +17,9 @@ module.exports = {
             return res.status(500).json(err);
         }
     },
-    async getOneThought(req, res) {
+    async getOneThought({ params }, res) {
         try {
-            const thought = await Thought.findOne({_id: req.params.thoughtId})
+            const thought = await Thought.findOne({ _id: params.id })
             .populate({
                 path: 'reactions',
                 select: '-__v'
