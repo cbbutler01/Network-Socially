@@ -19,7 +19,7 @@ module.exports = {
     },
     async getOneUser(req, res) {
         try {
-            const user = await User.findOne({ _id: req.params.userid })
+            const user = await User.findById(req.params.userid)
             .populate({
                 path: 'thoughts',
                 select: '-__v'
@@ -47,9 +47,9 @@ module.exports = {
             return res.status(500).json(err)
         }
     },
-    async updateUser({ params, body }, res) {
+    async updateUser(req, res) {
         try {
-            const user = await User.findOneAndUpdate({ _id: params.id }, body, {
+            const user = await User.findByIdAndUpdate(req.params.id, req.body, {
                 new:true,
                 runValidators: true
             })
@@ -62,9 +62,9 @@ module.exports = {
             return res.status(500).json(err);
         }
     },
-    async deleteUser({ params }, res) {
+    async deleteUser(req, res) {
         try {
-            const user = await User.findOneAndDelete({ _id: params.id });
+            const user = await User.findOneAndDelete(req.params.id);
     
             if (!user) {
                 return res.status(404).json({ message: 'No user found!' });
